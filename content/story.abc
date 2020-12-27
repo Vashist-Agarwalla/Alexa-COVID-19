@@ -1,0 +1,118 @@
+@start
+	*say
+		Good morning! hope you were having a great day.
+	*then
+        ->begin
+
+@begin
+	*say
+		Would you like to answer a few questions to confirm if you have COVID-19?
+	*then
+		hear yes, yeah, yup, sure, definitely {
+			->test1
+		} 
+		hear no, nope, nah {
+			->confirm
+		}
+
+@confirm
+	*say
+		Are you sure about your decision?
+	*then
+		hear yes, yeah, yup, sure, definitely {
+			->end
+		} 
+		hear I would like to reconsider, reconsider {
+			->begin
+		}	
+		hear No I would like to take the test {
+			->test1
+		}
+
+@test1
+	*say
+		Are you experiencing any of the following symptoms?
+		Cough, Fever, Difficulty in Breathing or None of the Above
+	*then
+		hear Cough, Fever, Difficulty in Breathing{
+			->testT
+		}
+		hear None of the Above{
+			->test2
+		}
+
+@test2
+	*say
+		Have you travelled anywhere internationally in the last 14 days?
+		Yes or No
+	*then
+		hear Yes{
+			->testT
+		}
+		hear No{
+			->test3
+		}
+
+@test3
+	*say
+		Which of the following applies to you?
+		I have recently interacted or lived with someone who has tested positive for COVID-19, I am a healthcare worker and I examined a COVID-19 confirmed case without protective gear or None of the Above
+	*then
+		hear Yes, 1, 2, I have recently interacted or lived with someone who has tested positive for COVID-19, I am a healthcare worker and I examined a COVID-19 confirmed case without protective gear{
+			->testT
+		}
+		hear No{
+			->test4
+		}
+
+@test4
+	*say
+		Have you ever had any one of the following?
+		Diabetes, Hypertension, Lung disease, Heart disease or None of the Above
+	*then
+		hear Cough, Fever, Difficulty in Breathing{
+			->risk
+		}
+		hear None of the Above{
+			->safe
+		}
+
+@testT
+	*say
+		Have you ever had any one of the following?
+		Diabetes, Hypertension, Lung disease, Heart disease or None of the Above
+	*then
+		hear Cough, Fever, Difficulty in Breathing{
+			->hRisk
+		}
+		hear None of the Above{
+			->mRisk
+		}
+
+@mRisk
+	*say
+		You are on risk. Kindly isolate yourself and consult a doctor immediately. 
+	*then
+		->end
+
+@hRisk
+	*say
+		You are on high risk. Kindly isolate yourself and consult a doctor immediately.
+	*then
+		->end
+
+@risk
+	*say
+		You are currently on low risk. Avoid going to crowded places, but if you have to don't forget to follow social distancing.
+	*then
+		->end
+
+@safe
+	*say
+		Congrats, you are totally safe. Don't forget to follow social distancing.
+	*then
+		->end
+
+@end
+	*say
+		Bye!
